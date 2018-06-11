@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "770978540351",
+    "firebase_url": "https://socializer-c69b2.firebaseio.com",
+    "project_id": "socializer-c69b2",
+    "storage_bucket": "socializer-c69b2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:770978540351:android:c1abaf18775ad424",
+        "android_client_info": {
+          "package_name": "com.example.shrey.socializer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "770978540351-lue76q5ahevpbookrfnhq1kumrsjvt0b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.shrey.socializer",
+            "certificate_hash": "aa3fa5ee9f731d2fde35c89ad4010a455e4ef6d8"
+          }
+        },
+        {
+          "client_id": "770978540351-8mpft4an6ijn3fk1cpa6akr89t92va9c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgkRxCJTE2yk5Z7zCuaydNCOYDvh51iZE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "770978540351-8mpft4an6ijn3fk1cpa6akr89t92va9c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

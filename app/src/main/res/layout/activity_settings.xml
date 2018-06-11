@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:backgroundTint="@color/colorPrimary"
+    tools:context="com.example.shrey.socializer.Settings">
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+
+        android:id="@+id/circleImageView"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="58dp"
+        android:src="@drawable/acc_image" />
+
+    <TextView
+        android:id="@+id/status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/DisplayName"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="18dp"
+        android:text="Hi there I am using Socializer"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/update_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/update_status"
+        android:layout_alignStart="@+id/update_status"
+        android:layout_below="@+id/status"
+        android:layout_marginTop="39dp"
+        android:backgroundTint="@color/colorAccent"
+        android:text="Update Image"
+        android:textColor="@android:color/white" />
+
+    <Button
+        android:id="@+id/update_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/update_img"
+        android:layout_centerHorizontal="true"
+        android:backgroundTint="@android:color/white"
+        android:text="Change Status"
+        android:textColor="@color/colorAccent" />
+
+    <TextView
+        android:id="@+id/DisplayName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/circleImageView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="38dp"
+        android:text="Display Name"
+        android:textSize="30sp" />
+
+</RelativeLayout>
