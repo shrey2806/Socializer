@@ -4,6 +4,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.example.shrey.socializer.Fragments.ChatsFragment;
+import com.example.shrey.socializer.Fragments.FriendsFragment;
+import com.example.shrey.socializer.Fragments.RequestFragment;
+
 /**
  * Created by Shrey on 4/17/2018.
  */

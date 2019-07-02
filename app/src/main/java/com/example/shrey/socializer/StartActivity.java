@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.shrey.socializer.LoginAndRegister.LoginActivity;
+import com.example.shrey.socializer.LoginAndRegister.RegisterActivity;
+
 public class StartActivity extends AppCompatActivity {
 
     private Button RegButton;
@@ -21,7 +24,7 @@ public class StartActivity extends AppCompatActivity {
         RegButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent regIntent=new Intent(StartActivity.this,RegisterActivity.class);
+                Intent regIntent=new Intent(StartActivity.this, RegisterActivity.class);
                 startActivity(regIntent);
 
             }
@@ -31,7 +34,7 @@ public class StartActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent logIntent=new Intent(StartActivity.this,LoginActivity.class);
+                Intent logIntent=new Intent(StartActivity.this, LoginActivity.class);
                 startActivity(logIntent);
             }
         });

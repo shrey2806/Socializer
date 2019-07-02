@@ -1,4 +1,4 @@
-package com.example.shrey.socializer;
+package com.example.shrey.socializer.Models;
 
 /**
  * Created by Shrey on 4/19/2018.

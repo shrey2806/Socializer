@@ -17,6 +17,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 
+import com.example.shrey.socializer.Adapters.MessageAdapter;
+import com.example.shrey.socializer.Models.Messages;
 import com.google.firebase.auth.FirebaseAuth;
 
 import com.google.firebase.database.ChildEventListener;

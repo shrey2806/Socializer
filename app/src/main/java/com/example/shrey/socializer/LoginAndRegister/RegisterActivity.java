@@ -1,4 +1,4 @@
-package com.example.shrey.socializer;
+package com.example.shrey.socializer.LoginAndRegister;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.shrey.socializer.MainActivity;
+import com.example.shrey.socializer.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -20,8 +22,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
-
-import org.w3c.dom.Text;
 
 import java.util.HashMap;
 
@@ -111,7 +111,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     if(task.isSuccessful()){
                                         regProgress.dismiss();
                                         Toast.makeText(RegisterActivity.this,"You are succefully registered",Toast.LENGTH_LONG).show();
-                                        Intent mainIntent=new Intent(RegisterActivity.this,MainActivity.class);
+                                        Intent mainIntent=new Intent(RegisterActivity.this, MainActivity.class);
                                         startActivity(mainIntent);
                                         finish();
 

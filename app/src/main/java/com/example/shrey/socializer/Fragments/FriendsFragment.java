@@ -1,32 +1,28 @@
-package com.example.shrey.socializer;
+package com.example.shrey.socializer.Fragments;
 
 
 import android.content.Context;
 import android.content.Intent;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.shrey.socializer.ChatActivity;
+import com.example.shrey.socializer.Models.Users;
+import com.example.shrey.socializer.R;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import io.reactivex.internal.operators.flowable.FlowableOnErrorReturn;
 
 
 public class FriendsFragment extends Fragment {
@@ -73,7 +69,7 @@ public class FriendsFragment extends Fragment {
             protected void populateViewHolder(FriendsViewHolder viewHolder, final Users model, int position) {
                 viewHolder.setName(model.getName());
                 viewHolder.setUserStatus(model.getStatus());
-               viewHolder.setuserImage(model.getThumb_image(),getContext());
+                viewHolder.setuserImage(model.getThumb_image(),getContext());
 
 
 
@@ -83,7 +79,7 @@ public class FriendsFragment extends Fragment {
                    public void onClick(View view) {
 
 
-                       Intent chatIntent=new Intent(getContext(),ChatActivity.class);
+                       Intent chatIntent=new Intent(getContext(), ChatActivity.class);
 //                       Log.i("hello", ""+m);
                        chatIntent.putExtra("userid",model.name);
                        startActivity(chatIntent);

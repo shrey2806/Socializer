@@ -1,4 +1,4 @@
-package com.example.shrey.socializer;
+package com.example.shrey.socializer.Adapters;
 
 
 import android.support.v7.widget.RecyclerView;
@@ -6,6 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.example.shrey.socializer.Models.Messages;
+import com.example.shrey.socializer.R;
 
 import java.util.List;
 
