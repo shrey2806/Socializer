@@ -11,6 +11,9 @@ import android.view.MenuItem;
 import com.example.shrey.socializer.LoginAndRegister.StartActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TabLayout mtablayout;
 
+    private DatabaseReference mUserRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
         mtablayout = findViewById(R.id.main_tabs);
         mtablayout.setupWithViewPager(mViewPager);
 
+        mUserRef= FirebaseDatabase.getInstance().getReference().child("users");
+
     }
 
 
@@ -58,8 +64,26 @@ public class MainActivity extends AppCompatActivity {
 
             sentToStart();
 
+        }else{
+            mUserRef.child("online").setValue("true");
         }
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        if(currentUser != null) {
+
+            mUserRef.child("online").setValue(ServerValue.TIMESTAMP);
+
+        }
+
+    }
+
+
 
     private void sentToStart() {
         Intent startIntent = new Intent(MainActivity.this, StartActivity.class);
