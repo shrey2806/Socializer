@@ -16,4 +16,6 @@
     <string name="send_friend_request">SEND FRIEND REQUEST</string>
     <string name="unfriend_person">UNFRIEND THIS PERSON</string>
     <string name="LogginUser">Logging User</string>
+    <string name="acceptFriendReq">ACCEPT FRIEND REQUEST</string>
+    <string name="declineFriendReq">CANCEL FRIEND REQUEST</string>
 </resources>

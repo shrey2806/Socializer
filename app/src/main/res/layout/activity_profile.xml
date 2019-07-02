@@ -10,8 +10,8 @@
         android:id="@+id/profile_image"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
         android:layout_marginBottom="299dp"
         android:src="@drawable/img" />
 
@@ -48,5 +48,17 @@
         android:backgroundTint="@color/colorAccent"
         android:text="@string/send_friend_request"
         android:textColor="@android:color/white" />
+
+    <TextView
+        android:id="@+id/profile_totalFriends"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignWithParentIfMissing="false"
+        android:layout_above="@+id/send_request_btn"
+        android:layout_alignParentEnd="false"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="false"
+        android:layout_marginBottom="24dp"
+        android:text="Total Friends" />
 
 </RelativeLayout>

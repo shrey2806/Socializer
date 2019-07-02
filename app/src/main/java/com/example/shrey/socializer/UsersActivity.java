@@ -46,7 +46,8 @@ public class UsersActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
+        //We need a viewHolder and a model class.
+        //Defining viewHolder in same class.
         FirebaseRecyclerAdapter<Users,UsersViewHolder> adapter =new FirebaseRecyclerAdapter<Users, UsersViewHolder>(
                 Users.class,
                 R.layout.users_layout,
@@ -55,12 +56,15 @@ public class UsersActivity extends AppCompatActivity {
             @Override
             protected void populateViewHolder(UsersViewHolder viewHolder, final Users model, int position) {
 
+
+
                 viewHolder.setName(model.getName());
                 viewHolder.setUserStatus(model.getStatus());
                 viewHolder.setuserImage(model.getThumb_image());
                 final String userId=getRef(position).getKey();
 
-                    viewHolder.mview.setOnClickListener(new View.OnClickListener() {
+                //Set On click listener for whole view
+                viewHolder.mview.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Intent profileIntent=new Intent(UsersActivity.this,ProfileActivity.class);

@@ -144,12 +144,13 @@ public class Settings extends AppCompatActivity {
             CropImage.activity(imageUri)
                     .setAspectRatio(1, 1)
                     .start(this);
-            //Toast.makeText(Settings.this,imageUri,Toast.LENGTH_LONG).show();
+
 
         }
 
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+
+                CropImage.ActivityResult result = CropImage.getActivityResult(data);
 
 
             if (resultCode == RESULT_OK) {
@@ -185,26 +186,35 @@ public class Settings extends AppCompatActivity {
                     final StorageReference thumb_filepath = mStorageRef.child("profile_images").child("thumbs").child(currentuid + ".jpg");
 
 
+                    //TODO: First Upload the main Image.
                     filepath.putFile(resultUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+
+                            //If main image is successfully uploaded
                             if (task.isSuccessful()) {
 
+                                //We get the download URL of that Image.
                                 final String download_url = task.getResult().getDownloadUrl().toString();
 
+                                //We start Uploading the thumb Image
                                 UploadTask uploadTask = thumb_filepath.putBytes(thumb_byte);
                                 uploadTask.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                                     @Override
                                     public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> thumb_task) {
+
+                                        //After Thumb Image is successfully uploaded
                                         if (thumb_task.isSuccessful()) {
                                             String thumb_downloadurl = thumb_task.getResult().getDownloadUrl().toString();
+
+                                            //Add both URLs in the "users" database;
 
                                             Map updateUrls = new HashMap<>();
                                             updateUrls.put("image", download_url);
                                             updateUrls.put("thumb_image", thumb_downloadurl);
 
 
-                                            mUserRef.updateChildren(updateUrls).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            mUserRef.updateChildren(updateUrls).addOnCompleteListener( new OnCompleteListener<Void>() {
                                                 @Override
                                                 public void onComplete(@NonNull Task<Void> task) {
 
