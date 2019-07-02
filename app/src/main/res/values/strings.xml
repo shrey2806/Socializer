@@ -15,4 +15,5 @@
     <string name="total_friends">Total Friends</string>
     <string name="send_friend_request">SEND FRIEND REQUEST</string>
     <string name="unfriend_person">UNFRIEND THIS PERSON</string>
+    <string name="LogginUser">Logging User</string>
 </resources>

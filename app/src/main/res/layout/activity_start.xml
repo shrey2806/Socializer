@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
     android:backgroundTint="@color/colorPrimary"
-    tools:context="com.example.shrey.socializer.StartActivity">
+    tools:context="com.example.shrey.socializer.LoginAndRegister.StartActivity">
 
     <TextView
         android:id="@+id/textView"

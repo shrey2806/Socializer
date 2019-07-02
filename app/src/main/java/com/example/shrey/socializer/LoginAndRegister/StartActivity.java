@@ -1,4 +1,4 @@
-package com.example.shrey.socializer;
+package com.example.shrey.socializer.LoginAndRegister;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -6,8 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.shrey.socializer.LoginAndRegister.LoginActivity;
-import com.example.shrey.socializer.LoginAndRegister.RegisterActivity;
+import com.example.shrey.socializer.R;
 
 public class StartActivity extends AppCompatActivity {
 

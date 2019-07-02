@@ -34,6 +34,7 @@ public class LoginActivity extends AppCompatActivity {
     private DatabaseReference mUserReference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         mAuth=FirebaseAuth.getInstance();
@@ -42,7 +43,9 @@ public class LoginActivity extends AppCompatActivity {
         lpassword=findViewById(R.id.log_password);
         mToolbar=findViewById(R.id.login_toolbar);
         logButton=findViewById(R.id.login1_btn);
+
         loginProgress=new ProgressDialog(this);
+
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("Login");
 
@@ -56,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 if(!TextUtils.isEmpty(email)|| !TextUtils.isEmpty(password)){
 
-                    loginProgress.setTitle("Logging User");
+                    loginProgress.setTitle(getString(R.string.LogginUser));
                     loginProgress.setMessage("Please wait for a while");
                     loginProgress.setCanceledOnTouchOutside(false);
                     loginProgress.show();
@@ -78,10 +81,12 @@ public class LoginActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
 
                 if(task.isSuccessful()){
+
                     loginProgress.dismiss();
 
 
                     String deviceToken= FirebaseInstanceId.getInstance().getToken();
+
                     String  current_user_id=mAuth.getCurrentUser().getUid();
 
 

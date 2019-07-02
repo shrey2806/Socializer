@@ -13,6 +13,8 @@ import com.example.shrey.socializer.Fragments.RequestFragment;
  */
 
 class SectionsPagerAdapter extends FragmentPagerAdapter {
+
+
     public SectionsPagerAdapter(FragmentManager fm) {
         super(fm);
     }
@@ -45,6 +47,8 @@ class SectionsPagerAdapter extends FragmentPagerAdapter {
     public int getCount() {
         return 3;
     }
+
+
 
 
     public CharSequence getPageTitle(int position){
