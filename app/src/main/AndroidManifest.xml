@@ -14,7 +14,9 @@
         android:roundIcon="@drawable/iconapp"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".StatusActivity"></activity>
+        <activity android:name=".StatusActivity"
+            android:parentActivityName=".Settings"
+            />
 
         <service android:name=".FirebaseMessagingService">
             <intent-filter>
@@ -36,8 +38,11 @@
         <activity
             android:name=".LoginAndRegister.RegisterActivity"
             android:parentActivityName=".LoginAndRegister.StartActivity" />
+
         <activity android:name=".LoginAndRegister.LoginActivity" />
+
         <activity android:name=".Settings" />
+
         <activity
             android:name=".UsersActivity"
             android:parentActivityName=".MainActivity" />
@@ -45,6 +50,7 @@
             android:name=".ChatActivity"
             android:parentActivityName=".MainActivity" />
         <activity android:name=".ProfileActivity" />
+
     </application>
 
 </manifest>

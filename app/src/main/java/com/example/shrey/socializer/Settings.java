@@ -2,6 +2,7 @@ package com.example.shrey.socializer;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -111,13 +112,6 @@ public class Settings extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-
-//                CropImage.activity()
-//                        .setGuidelines(CropImageView.Guidelines.ON)
-//                        .start(Settings.this);
-//
-//
-
                 Intent galleryIntent = new Intent();
                 galleryIntent.setType("image/*");
                 galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
@@ -127,6 +121,15 @@ public class Settings extends AppCompatActivity {
             }
         });
 
+
+        upStatus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent statusi=new Intent(Settings.this,StatusActivity.class);
+                startActivity(statusi);
+            }
+        });
 
     }
 
