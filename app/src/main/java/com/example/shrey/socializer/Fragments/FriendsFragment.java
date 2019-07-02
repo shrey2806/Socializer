@@ -19,7 +19,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.shrey.socializer.ChatActivity;
 import com.example.shrey.socializer.Models.Friends;
-import com.example.shrey.socializer.Models.Users;
+
 import com.example.shrey.socializer.ProfileActivity;
 import com.example.shrey.socializer.R;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;

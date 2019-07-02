@@ -232,10 +232,10 @@ public class ProfileActivity extends AppCompatActivity {
                 if (current_status.equals("request_received")) {
 
                     final String currentDate = DateFormat.getDateTimeInstance().format(new Date());
-                    FriendsDatabase.child(currentUser.getUid()).child(user_id).setValue(currentDate).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    FriendsDatabase.child(currentUser.getUid()).child(user_id).child("date").setValue(currentDate).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            FriendsDatabase.child(user_id).child(currentUser.getUid()).setValue(currentDate).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            FriendsDatabase.child(user_id).child(currentUser.getUid()).child("date").setValue(currentDate).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
 

@@ -1,6 +1,7 @@
 package com.example.shrey.socializer.Adapters;
 
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.shrey.socializer.Models.Messages;
 import com.example.shrey.socializer.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 
@@ -17,6 +19,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageViewHolder>{
 
     private List<Messages> mMessageList;
+    private FirebaseAuth mAuth;
 
     public MessageAdapter(List<Messages> mMessageList){
 
@@ -39,15 +42,17 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
     public class MessageViewHolder extends RecyclerView.ViewHolder{
 
-        public TextView messageText;
-        public CircleImageView profileImage;
+        public TextView messageTextLeft;
+        public TextView messageTextRight;
+       // public CircleImageView profileImage;
 
 
         public MessageViewHolder(View itemView) {
             super(itemView);
 
-            messageText=(TextView) itemView.findViewById(R.id.message_text);
-            profileImage=(CircleImageView)itemView.findViewById(R.id.message_profile_pic);
+            messageTextLeft=(TextView) itemView.findViewById(R.id.message_text_left);
+            messageTextRight=(TextView) itemView.findViewById(R.id.message_text_right);
+           // profileImage=(CircleImageView)itemView.findViewById(R.id.message_profile_pic);
 
         }
     }
@@ -56,8 +61,30 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     @Override
     public void onBindViewHolder(MessageViewHolder mholder, int i) {
 
+        mAuth=FirebaseAuth.getInstance();
+            String current_user_id=mAuth.getCurrentUser().getUid();
 
-            mholder.messageText.setText(mMessageList.get(i).getMessage());
+            Messages m = mMessageList.get(i);
+
+            String from_user=m.getFrom();
+
+            if(from_user.equals(current_user_id)){
+
+               mholder.messageTextRight.setText(mMessageList.get(i).getMessage());
+               mholder.messageTextRight.setVisibility(View.VISIBLE);
+                mholder.messageTextLeft.setVisibility(View.INVISIBLE);
+
+            }else{
+
+                mholder.messageTextLeft.setText(mMessageList.get(i).getMessage());
+                mholder.messageTextLeft.setVisibility(View.VISIBLE);
+                mholder.messageTextRight.setVisibility(View.INVISIBLE);
+
+
+
+            }
+
+           // mholder.messageText.setText(mMessageList.get(i).getMessage());
 
     }
 

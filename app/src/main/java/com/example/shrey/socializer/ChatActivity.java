@@ -30,6 +30,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -111,7 +112,7 @@ public class ChatActivity extends AppCompatActivity {
         mCurrentuser = mAuth.getCurrentUser().getUid();
         mCurrentuserRef = mrootref.child("users").child(mCurrentuser);
 
-
+        loadMessages();
 
         //Adding online icon and imageview of the chat user
         mrootref.child("users").child(chatUser).addValueEventListener(new ValueEventListener() {
@@ -145,45 +146,36 @@ public class ChatActivity extends AppCompatActivity {
 
 
 
-        mCurrentuserRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        mrootref.child("Chat").child(mCurrentuser).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                mCurrentusername = dataSnapshot.child("name").getValue(String.class);
 
 
-                mrootref.child("Chat").child(mCurrentusername).addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        if (!dataSnapshot.hasChild(chatUser)) {
-                            Map chatUserMap = new HashMap();
-                            chatUserMap.put("Chat/" + mCurrentusername + "/" + chatUser, "default");
-                            chatUserMap.put("Chat/" + chatUser + "/" + mCurrentusername, "default");
+                if(!dataSnapshot.hasChild(chatUser)){
 
-                            mrootref.updateChildren(chatUserMap, new DatabaseReference.CompletionListener() {
-                                @Override
-                                public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
-                                    if (databaseError != null) {
-                                        Log.d("TAG CHAT", databaseError.getMessage().toString());
+                    Map chatAddMap = new HashMap();
+                    chatAddMap.put("seen", false);
+                    chatAddMap.put("timestamp", ServerValue.TIMESTAMP);
 
-                                    }
+                    Map chatUserMap = new HashMap();
+                    chatUserMap.put("Chat/" + mCurrentuser + "/" + chatUser, chatAddMap);
+                    chatUserMap.put("Chat/" + chatUser + "/" + mCurrentuser, chatAddMap);
 
-                                }
-                            });
+                    mrootref.updateChildren(chatUserMap, new DatabaseReference.CompletionListener() {
+                        @Override
+                        public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+
+                            if(databaseError != null){
+
+                                Log.d("CHAT_LOG", databaseError.getMessage().toString());
+
+                            }
+
                         }
+                    });
 
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-
-
-                loadMessages();
-
+                }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
@@ -191,7 +183,7 @@ public class ChatActivity extends AppCompatActivity {
         });
 
 
-        //
+        //-----------------------------------------//
 
         chatSendbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -206,7 +198,7 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void loadMessages() {
-        mrootref.child("messages").child(mCurrentusername).child(chatUser).addChildEventListener(new ChildEventListener() {
+        mrootref.child("messages").child(mCurrentuser).child(chatUser).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Messages message = dataSnapshot.getValue(Messages.class);
@@ -218,6 +210,8 @@ public class ChatActivity extends AppCompatActivity {
                 }
                 messagesList.add(message);
                 mAdapter.notifyDataSetChanged();
+
+
 
             }
 
@@ -286,11 +280,20 @@ public class ChatActivity extends AppCompatActivity {
         String message = chatmessageView.getText().toString();
         if (!TextUtils.isEmpty(message)) {
 
-            String current_user_ref = "messages" + "/" + mCurrentusername + "/" + chatUser;
-            String chat_user_ref = "messages" + "/" + chatUser + "/" + mCurrentusername;
+            String current_user_ref = "messages" + "/" + mCurrentuser + "/" + chatUser;
+            String chat_user_ref = "messages" + "/" + chatUser + "/" + mCurrentuser;
 
-            DatabaseReference user_message_push = mrootref.child("messages").child(mCurrentusername).child(chatUser).push();
+            DatabaseReference user_message_push = mrootref.child("messages").child(mCurrentuser).child(chatUser).push();
+
+
             String push_id = user_message_push.getKey();
+
+            Map messageMap = new HashMap();
+            messageMap.put("message", message);
+            messageMap.put("seen", false);
+            messageMap.put("type", "text");
+            messageMap.put("time", ServerValue.TIMESTAMP);
+            messageMap.put("from", mCurrentuser);
 //            Map messageMap=new HashMap();
 //            messageMap.put(current_user_ref+"/"+"message",message);
 //            messageMap.put(chat_user_ref+"/"+"message",message);
@@ -302,9 +305,6 @@ public class ChatActivity extends AppCompatActivity {
 //                }
 //            });
 //
-            Map messageMap = new HashMap();
-            messageMap.put("message", message);
-
 
             Map messageUsermap = new HashMap();
             messageUsermap.put(current_user_ref + "/" + push_id, messageMap);
