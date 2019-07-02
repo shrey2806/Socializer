@@ -15,8 +15,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 
+import com.bumptech.glide.Glide;
 import com.example.shrey.socializer.Adapters.MessageAdapter;
 import com.example.shrey.socializer.Models.Messages;
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,7 +37,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ChatActivity extends AppCompatActivity{
+public class ChatActivity extends AppCompatActivity {
 
 
     private String chatUser;
@@ -44,31 +47,36 @@ public class ChatActivity extends AppCompatActivity{
     private String mCurrentuser;
     private DatabaseReference mCurrentuserRef;
 
+    private TextView mDiplayTitle;
+    private ImageView mDisplayImage;
+    private ImageView onlineIcon;
+
+
     private EditText chatmessageView;
     private ImageButton chatSendbtn;
     String mCurrentusername;
 
     private RecyclerView mMessagesList;
-    private final List<Messages> messagesList=new ArrayList<>();
+    private final List<Messages> messagesList = new ArrayList<>();
     private LinearLayoutManager mlinearLayout;
     private MessageAdapter mAdapter;
 
+    String chatUserName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
         chatUser = getIntent().getStringExtra("userid");
+        chatUserName=getIntent().getStringExtra("user_name");
 
-
-        mChatToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.chat_app_bar);
+        mChatToolbar = findViewById(R.id.chat_app_bar);
         setSupportActionBar(mChatToolbar);
         ActionBar actionBar = getSupportActionBar();
 
 
-        chatmessageView=(EditText)findViewById(R.id.chatEditText);
-        chatSendbtn=(ImageButton)findViewById(R.id.send_btn);
-
+        chatmessageView = findViewById(R.id.chatEditText);
+        chatSendbtn = findViewById(R.id.send_btn);
 
 
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -80,16 +88,21 @@ public class ChatActivity extends AppCompatActivity{
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowCustomEnabled(true);
 
-        mAdapter=new MessageAdapter(messagesList);
+
+        mDiplayTitle=findViewById(R.id.custom_bar_name);
+        mDisplayImage=findViewById(R.id.custom_bar_image);
+        onlineIcon=findViewById(R.id.custom_online_icon);
 
 
-        mMessagesList=(RecyclerView)findViewById(R.id.messages_list);
-        mlinearLayout=new LinearLayoutManager(this);
+       mDiplayTitle.setText(chatUserName);
+
+        mAdapter = new MessageAdapter(messagesList);
+
+
+        mMessagesList = (RecyclerView) findViewById(R.id.messages_list);
+        mlinearLayout = new LinearLayoutManager(this);
         mMessagesList.setLayoutManager(mlinearLayout);
         mMessagesList.setAdapter(mAdapter);
-
-
-
 
 
         mrootref = FirebaseDatabase.getInstance().getReference();
@@ -100,14 +113,42 @@ public class ChatActivity extends AppCompatActivity{
 
 
 
+        //Adding online icon and imageview of the chat user
+        mrootref.child("users").child(chatUser).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                String online = dataSnapshot.child("online").getValue().toString();
+                String image = dataSnapshot.child("image").getValue().toString();
+                try {
+                    Glide.with(getApplicationContext()).load(image).placeholder(R.drawable.acc_image).into(mDisplayImage);
+                }catch (Exception e){
+                    Log.d("Cannot load Image","Can't");
+                }
+                if(online.equals("true")) {
+                    onlineIcon.setVisibility(View.VISIBLE);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
+
+
+
+
 
         mCurrentuserRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                 mCurrentusername = dataSnapshot.child("name").getValue(String.class);
-
-
-
+                mCurrentusername = dataSnapshot.child("name").getValue(String.class);
 
 
                 mrootref.child("Chat").child(mCurrentusername).addValueEventListener(new ValueEventListener() {
@@ -168,11 +209,11 @@ public class ChatActivity extends AppCompatActivity{
         mrootref.child("messages").child(mCurrentusername).child(chatUser).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Messages message=dataSnapshot.getValue(Messages.class);
+                Messages message = dataSnapshot.getValue(Messages.class);
 
                 //Log.d("Valuemessage",dataSnapshot.getChildren().toString());
 
-                if(message==null) {
+                if (message == null) {
                     return;
                 }
                 messagesList.add(message);
@@ -241,15 +282,15 @@ public class ChatActivity extends AppCompatActivity{
         });
     }
 
-    private void sendMessage(){
-        String message=chatmessageView.getText().toString();
-        if(!TextUtils.isEmpty(message)){
+    private void sendMessage() {
+        String message = chatmessageView.getText().toString();
+        if (!TextUtils.isEmpty(message)) {
 
-            String current_user_ref="messages"+"/"+mCurrentusername+"/"+chatUser;
-            String chat_user_ref="messages"+"/"+chatUser+"/"+mCurrentusername;
+            String current_user_ref = "messages" + "/" + mCurrentusername + "/" + chatUser;
+            String chat_user_ref = "messages" + "/" + chatUser + "/" + mCurrentusername;
 
-            DatabaseReference user_message_push=mrootref.child("messages").child(mCurrentusername).child(chatUser).push();
-            String push_id=user_message_push.getKey();
+            DatabaseReference user_message_push = mrootref.child("messages").child(mCurrentusername).child(chatUser).push();
+            String push_id = user_message_push.getKey();
 //            Map messageMap=new HashMap();
 //            messageMap.put(current_user_ref+"/"+"message",message);
 //            messageMap.put(chat_user_ref+"/"+"message",message);
@@ -261,23 +302,23 @@ public class ChatActivity extends AppCompatActivity{
 //                }
 //            });
 //
-            Map messageMap=new HashMap();
-            messageMap.put("message",message);
+            Map messageMap = new HashMap();
+            messageMap.put("message", message);
 
 
-            Map messageUsermap=new HashMap();
-            messageUsermap.put(current_user_ref+"/"+push_id,messageMap);
-            messageUsermap.put(chat_user_ref+"/"+push_id,messageMap);
+            Map messageUsermap = new HashMap();
+            messageUsermap.put(current_user_ref + "/" + push_id, messageMap);
+            messageUsermap.put(chat_user_ref + "/" + push_id, messageMap);
 
             mrootref.updateChildren(messageUsermap, new DatabaseReference.CompletionListener() {
                 @Override
                 public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
-                   if(databaseError!=null)
-                    Log.d("Hello",databaseError.getMessage().toString());
+                    if (databaseError != null)
+                        Log.d("Hello", databaseError.getMessage().toString());
                 }
             });
 
-       }
+        }
 
     }
 
