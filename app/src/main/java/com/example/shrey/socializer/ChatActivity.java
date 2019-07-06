@@ -130,6 +130,9 @@ public class ChatActivity extends AppCompatActivity {
                     onlineIcon.setVisibility(View.VISIBLE);
                 }
 
+                if(!online.equals("true")){
+                    onlineIcon.setVisibility(View.INVISIBLE);
+                }
             }
 
             @Override
@@ -210,6 +213,7 @@ public class ChatActivity extends AppCompatActivity {
                 }
                 messagesList.add(message);
                 mAdapter.notifyDataSetChanged();
+                mMessagesList.scrollToPosition(messagesList.size() - 1);
 
 
 

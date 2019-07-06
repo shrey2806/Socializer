@@ -16,8 +16,7 @@ public class Details {
       DatabaseReference ref;
       String name;
 
-      public Details(DatabaseReference ref)
-      {
+      public Details(DatabaseReference ref){
           this.ref=ref;
       }
 

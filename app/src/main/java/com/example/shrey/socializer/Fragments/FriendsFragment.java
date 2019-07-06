@@ -80,7 +80,7 @@ public class FriendsFragment extends Fragment {
             @Override
             protected void populateViewHolder(final FriendsViewHolder viewHolder, final Friends model, int position) {
 
-                viewHolder.setDate(model.getDate());
+               // viewHolder.setDate(model.getDate());
 
                 final String list_userid = getRef(position).getKey();
 
@@ -88,6 +88,7 @@ public class FriendsFragment extends Fragment {
                 mUsersDatabase.child(list_userid).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+
                         final String userName = dataSnapshot.child("name").getValue().toString();
                         String userThumb = dataSnapshot.child("thumb_image").getValue().toString();
 
@@ -151,23 +152,6 @@ public class FriendsFragment extends Fragment {
 
 
 
-
-
-
-                viewHolder.mview.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-
-                        //Intent chatIntent = new Intent(getContext(), ChatActivity.class);
-//                       Log.i("hello", ""+m);
-                       // chatIntent.putExtra("userid", model.name);
-                        //startActivity(chatIntent);
-
-                    }
-                });
-
-
             }
 
 
@@ -186,21 +170,12 @@ public class FriendsFragment extends Fragment {
 
         }
 
-      public void setDate(String date){
-            //
-      }
 
         public  void setName(String name){
             TextView usernameView=mview.findViewById(R.id.users_name);
             usernameView.setText(name);
         }
 
-        public void setUserStatus(String status){
-            TextView userStatus=mview.findViewById(R.id.user_status);
-            userStatus.setText(status);
-
-
-        }
         public void setuserImage(String thumb_image){
             CircleImageView userImageview=mview.findViewById(R.id.user_image);
             Glide.with(mview.getContext()).load(thumb_image).placeholder(R.drawable.acc_image).into(userImageview);
@@ -208,7 +183,6 @@ public class FriendsFragment extends Fragment {
 
 
         public void setUserOnline(String online_status) {
-
             ImageView userOnlineView = (ImageView) mview.findViewById(R.id.online_icon_imageview);
 
             if(online_status.equals("true")){

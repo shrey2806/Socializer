@@ -38,12 +38,12 @@
 
     <ImageView
         android:id="@+id/online_icon_imageview"
-        android:layout_width="15dp"
-        android:layout_height="22dp"
-        android:layout_alignParentStart="true"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="220dp"
-        android:layout_marginTop="17dp"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="23dp"
+        android:layout_toEndOf="@+id/users_name"
         android:visibility="invisible"
         app:srcCompat="@drawable/online_icon" />
 
