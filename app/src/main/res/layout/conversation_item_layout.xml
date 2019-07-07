@@ -32,8 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/conv_user_name"
         android:layout_alignStart="@+id/conv_user_name"
-        android:layout_marginTop="5dp"
-        android:text="Status" />
+        android:layout_marginTop="5dp" />
 
     <ImageView
         android:id="@+id/conv_online_icon"
