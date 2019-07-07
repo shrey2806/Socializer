@@ -150,9 +150,9 @@ public class ChatActivity extends AppCompatActivity {
                 if (!dataSnapshot.hasChild(chatUser)) {
 
                     Map chatAddMap = new HashMap();
-                    // chatAddMap.put("seen", false);
-
-
+                    // to check whether this messgae has been seen or not;
+                    chatAddMap.put("seen", false);
+                    //To sort the chats by time stamp;
                     chatAddMap.put("timestamp", ServerValue.TIMESTAMP);
 
                     Map chatUserMap = new HashMap();
