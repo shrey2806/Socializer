@@ -69,7 +69,7 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
         chatUser = getIntent().getStringExtra("userid");
-        chatUserName=getIntent().getStringExtra("user_name");
+        chatUserName = getIntent().getStringExtra("user_name");
 
         mChatToolbar = findViewById(R.id.chat_app_bar);
         setSupportActionBar(mChatToolbar);
@@ -90,12 +90,12 @@ public class ChatActivity extends AppCompatActivity {
         actionBar.setDisplayShowCustomEnabled(true);
 
 
-        mDiplayTitle=findViewById(R.id.custom_bar_name);
-        mDisplayImage=findViewById(R.id.custom_bar_image);
-        onlineIcon=findViewById(R.id.custom_online_icon);
+        mDiplayTitle = findViewById(R.id.custom_bar_name);
+        mDisplayImage = findViewById(R.id.custom_bar_image);
+        onlineIcon = findViewById(R.id.custom_online_icon);
 
 
-       mDiplayTitle.setText(chatUserName);
+        mDiplayTitle.setText(chatUserName);
 
         mAdapter = new MessageAdapter(messagesList);
 
@@ -123,14 +123,14 @@ public class ChatActivity extends AppCompatActivity {
                 String image = dataSnapshot.child("image").getValue().toString();
                 try {
                     Glide.with(getApplicationContext()).load(image).placeholder(R.drawable.acc_image).into(mDisplayImage);
-                }catch (Exception e){
-                    Log.d("Cannot load Image","Can't");
+                } catch (Exception e) {
+                    Log.d("Cannot load Image", "Can't");
                 }
-                if(online.equals("true")) {
+                if (online.equals("true")) {
                     onlineIcon.setVisibility(View.VISIBLE);
                 }
 
-                if(!online.equals("true")){
+                if (!online.equals("true")) {
                     onlineIcon.setVisibility(View.INVISIBLE);
                 }
             }
@@ -142,22 +142,17 @@ public class ChatActivity extends AppCompatActivity {
         });
 
 
-
-
-
-
-
-
-
         mrootref.child("Chat").child(mCurrentuser).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
 
-                if(!dataSnapshot.hasChild(chatUser)){
+                if (!dataSnapshot.hasChild(chatUser)) {
 
                     Map chatAddMap = new HashMap();
-                    chatAddMap.put("seen", false);
+                    // chatAddMap.put("seen", false);
+
+
                     chatAddMap.put("timestamp", ServerValue.TIMESTAMP);
 
                     Map chatUserMap = new HashMap();
@@ -168,7 +163,7 @@ public class ChatActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
 
-                            if(databaseError != null){
+                            if (databaseError != null) {
 
                                 Log.d("CHAT_LOG", databaseError.getMessage().toString());
 
@@ -179,6 +174,7 @@ public class ChatActivity extends AppCompatActivity {
 
                 }
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
@@ -201,6 +197,7 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void loadMessages() {
+
         mrootref.child("messages").child(mCurrentuser).child(chatUser).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -214,7 +211,6 @@ public class ChatActivity extends AppCompatActivity {
                 messagesList.add(message);
                 mAdapter.notifyDataSetChanged();
                 mMessagesList.scrollToPosition(messagesList.size() - 1);
-
 
 
             }
@@ -238,45 +234,7 @@ public class ChatActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
 
             }
-//        });
-//        mrootref.child("messages").child(mCurrentusername).child(chatUser).addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//
-//
-////                if (!dataSnapshot.hasChild("message")) {
-////                    Map chatUserMap = new HashMap();
-////                    chatUserMap.put("messages/" + mCurrentusername + "/" + chatUser+"/"+"message/", "");
-////                    chatUserMap.put("messages/" + chatUser + "/" + mCurrentusername+"/"+"message/", "");
-////
-////                    mrootref.updateChildren(chatUserMap, new DatabaseReference.CompletionListener() {
-////                        @Override
-////                        public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
-////                            if (databaseError != null) {
-////                                Log.d("TAG CHAT", databaseError.getMessage().toString());
-////
-////                            }
-////
-////                        }
-////                    });
-////                }
-//
-//
-//                Messages message=dataSnapshot.getValue(Messages.class);
-//
-//                if(message==null){
-//                    return;
-//                }
-//
-//                messagesList.add(message);
-//                mAdapter.notifyDataSetChanged();
-//
-//            }
 
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
         });
     }
 
