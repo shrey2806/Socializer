@@ -92,7 +92,7 @@ public class UsersActivity extends AppCompatActivity {
 
         }
         public  void setName(String name){
-            TextView usernameView=mview.findViewById(R.id.users_name);
+            TextView usernameView=mview.findViewById(R.id.conv_user_name);
             usernameView.setText(name);
         }
 
@@ -103,7 +103,7 @@ public class UsersActivity extends AppCompatActivity {
 
         }
         public void setuserImage(String thumb_image){
-            CircleImageView userImageview=mview.findViewById(R.id.user_image);
+            CircleImageView userImageview=mview.findViewById(R.id.conv_user_image);
             Glide.with(mview.getContext()).load(thumb_image).placeholder(R.drawable.acc_image).into(userImageview);
         }
 

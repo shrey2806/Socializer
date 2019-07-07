@@ -1,7 +1,6 @@
 package com.example.shrey.socializer.Fragments;
 
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -172,12 +171,12 @@ public class FriendsFragment extends Fragment {
 
 
         public  void setName(String name){
-            TextView usernameView=mview.findViewById(R.id.users_name);
+            TextView usernameView=mview.findViewById(R.id.conv_user_name);
             usernameView.setText(name);
         }
 
         public void setuserImage(String thumb_image){
-            CircleImageView userImageview=mview.findViewById(R.id.user_image);
+            CircleImageView userImageview=mview.findViewById(R.id.conv_user_image);
             Glide.with(mview.getContext()).load(thumb_image).placeholder(R.drawable.acc_image).into(userImageview);
         }
 
