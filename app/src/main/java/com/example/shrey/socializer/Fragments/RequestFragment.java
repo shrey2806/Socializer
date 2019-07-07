@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.example.shrey.socializer.Models.FriendRequest;
 import com.example.shrey.socializer.R;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,6 +25,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import java.text.DateFormat;
+import java.util.Date;
 
 
 /**
@@ -33,7 +39,7 @@ public class RequestFragment extends Fragment {
 
     RecyclerView mRequestsList;
 
-    DatabaseReference mUserDatabase,mRequestDatabase , mFriendDatabase;
+    DatabaseReference mUserDatabase,mRequestDatabase , mFriendDatabase, mReqDatabase2;
 
     View mainView;
 
@@ -62,6 +68,8 @@ public class RequestFragment extends Fragment {
 
        mRequestDatabase = FirebaseDatabase.getInstance().getReference().child("Friend_requests").child(currentUserId);
 
+       mRequestDatabase = FirebaseDatabase.getInstance().getReference().child("Friend_requests");
+
        mFriendDatabase = FirebaseDatabase.getInstance().getReference().child("Friends");
 
 
@@ -74,9 +82,9 @@ public class RequestFragment extends Fragment {
 
         // TODO : First query on the database with the friend Requests.
         // TODO : Add these requests in the layout.
+        Query query = mRequestDatabase.orderByChild("request_type").equalTo("received");
 
-
-        FirebaseRecyclerAdapter<FriendRequest,FriendsReqViewHolder > firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<FriendRequest,
+        final FirebaseRecyclerAdapter<FriendRequest,FriendsReqViewHolder > firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<FriendRequest,
                 FriendsReqViewHolder>(FriendRequest.class,R.layout.friend_request_layout,
                 FriendsReqViewHolder.class,mRequestDatabase) {
             @Override
@@ -96,6 +104,9 @@ public class RequestFragment extends Fragment {
                         String img = dataSnapshot.child("thumb_image").getValue().toString();
 
                         viewHolder.setImage(img);
+
+
+                        //TODO :  Add onCLick listener on viewHolder so that it displays the account information of the clicked user
                     }
 
                     @Override
@@ -104,11 +115,79 @@ public class RequestFragment extends Fragment {
                     }
                 });
 
+                // Start of getAccept Button Call
+                viewHolder.getAcceptButton().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
 
+                        // Add the current user as friend in the database;
+
+                        final String currentDate = DateFormat.getDateTimeInstance().format(new Date());
+
+                        mFriendDatabase.child(currentUserId).child(request_user_id).child("date").setValue(currentDate).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+
+                                mFriendDatabase.child(request_user_id).child(currentUserId).child("date").setValue(currentDate).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        // Remove the request;
+
+                                        mRequestDatabase.child(request_user_id).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+
+                                                mReqDatabase2.child(request_user_id).child(currentUserId).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        //firebaseRecyclerAdapter.notifyDataSetChanged();
+                                                        Log.i("REQUEST FRAGMENT","Work Done Yipeee");
+
+                                                    }
+                                                });
+                                            }
+                                        });
+
+                                    }
+                                });
+
+                            }
+                        });
+
+
+
+                    }
+                });
+
+                // End of the  get Accept Button call----------------
+
+                viewHolder.getRejectButton().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        mRequestDatabase.child(request_user_id).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+
+                                mReqDatabase2.child(request_user_id).child(currentUserId).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        //firebaseRecyclerAdapter.notifyDataSetChanged();
+                                        Log.i("REQUEST FRAGMENT","Reject button work done successfully");
+
+                                    }
+                                });
+                            }
+                        });
+
+                    }
+                });
 
 
             }
         };
+
+        mRequestsList.setAdapter(firebaseRecyclerAdapter);
 
     }
 
@@ -122,7 +201,16 @@ public class RequestFragment extends Fragment {
             mview = itemView;
         }
 
+        public Button getAcceptButton(){
+            return mview.findViewById(R.id.accept_button);
 
+        }
+
+        public Button getRejectButton(){
+
+            return mview.findViewById(R.id.reject_button);
+
+        }
         public void setName(String name){
             TextView DisplayName= mview.findViewById(R.id.request_display_name);
             DisplayName.setText(name);
