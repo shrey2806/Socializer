@@ -4,7 +4,7 @@ package com.example.shrey.socializer.Models;
 
 public class Conversation {
     public boolean seen;
-    public String timestamp;
+    public Long timestamp;
 
 
     public boolean isSeen() {
@@ -15,11 +15,11 @@ public class Conversation {
         this.seen = seen;
     }
 
-    public String getTimestamp() {
+    public Long getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(String timestamp) {
+    public void setTimestamp(Long timestamp) {
         this.timestamp = timestamp;
     }
 }
