@@ -1,7 +1,7 @@
 package com.example.shrey.socializer.Models;
 
-public class FriendRequest
-{
+public class FriendRequest {
+
     public String getRequest_type() {
         return request_type;
     }

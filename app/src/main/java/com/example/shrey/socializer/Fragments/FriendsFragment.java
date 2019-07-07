@@ -61,8 +61,7 @@ public class FriendsFragment extends Fragment {
         mFriendlist.setLayoutManager(new LinearLayoutManager(getContext()));
 
         mUsersDatabase = FirebaseDatabase.getInstance().getReference().child("users");
-        mFriendDatabase = FirebaseDatabase.getInstance().getReference().child("Friend_requests").child(userid);
-
+        mFriendDatabase = FirebaseDatabase.getInstance().getReference().child("Friends").child(userid);
 
 
         return mMainView;

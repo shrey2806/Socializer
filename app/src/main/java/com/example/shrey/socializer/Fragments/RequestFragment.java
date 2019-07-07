@@ -24,7 +24,9 @@ public class RequestFragment extends Fragment {
 
     RecyclerView mRequestsList;
 
-    DatabaseReference mUserDatabase,mRequestDatabase;
+    DatabaseReference mUserDatabase,mRequestDatabase , mFriendDatabase;
+
+
 
     View mainView;
 
@@ -53,7 +55,11 @@ public class RequestFragment extends Fragment {
 
        mUserDatabase = FirebaseDatabase.getInstance().getReference().child("users");
 
-       mRequestDatabase = FirebaseDatabase.getInstance().getReference().child("")
+       mRequestDatabase = FirebaseDatabase.getInstance().getReference().child("Friend_requests").child(currentUserId);
+
+       mFriendDatabase = FirebaseDatabase.getInstance().getReference().child("Friends");
+
+
 
 
        return mainView;
