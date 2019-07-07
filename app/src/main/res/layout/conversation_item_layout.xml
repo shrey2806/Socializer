@@ -5,7 +5,7 @@
     android:layout_height="wrap_content">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/conv_user_image"
+        android:id="@+id/request_display_image"
         android:layout_width="63dp"
         android:layout_height="64dp"
         android:layout_marginLeft="15dp"
@@ -16,12 +16,12 @@
         app:srcCompat="@drawable/acc_image" />
 
     <TextView
-        android:id="@+id/conv_user_name"
+        android:id="@+id/request_display_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/conv_user_image"
+        android:layout_alignTop="@+id/request_display_image"
         android:layout_marginStart="19dp"
-        android:layout_toEndOf="@+id/conv_user_image"
+        android:layout_toEndOf="@+id/request_display_image"
         android:text="Display Name"
         android:textColor="@android:color/background_dark"
         android:textSize="18sp" />
@@ -30,8 +30,8 @@
         android:id="@+id/conv_last_message_textv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/conv_user_name"
-        android:layout_alignStart="@+id/conv_user_name"
+        android:layout_below="@+id/request_display_name"
+        android:layout_alignStart="@+id/request_display_name"
         android:layout_marginTop="5dp" />
 
     <ImageView
@@ -41,7 +41,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="11dp"
         android:layout_marginTop="23dp"
-        android:layout_toEndOf="@+id/conv_user_name"
+        android:layout_toEndOf="@+id/request_display_name"
         android:visibility="invisible"
         app:srcCompat="@drawable/online_icon" />
 

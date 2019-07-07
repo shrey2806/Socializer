@@ -27,7 +27,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -191,14 +190,14 @@ public class ChatsFragment extends Fragment {
 
         public void setName(String name) {
 
-            TextView displayNameView = mview.findViewById(R.id.conv_user_name);
+            TextView displayNameView = mview.findViewById(R.id.request_display_name);
             displayNameView.setText(name);
 
         }
 
         public void setImage(String thumb_image, Context ctx) {
 
-            CircleImageView displayImageView = mview.findViewById(R.id.conv_user_image);
+            CircleImageView displayImageView = mview.findViewById(R.id.request_display_image);
             Glide.with(ctx).load(thumb_image).placeholder(R.drawable.acc_image).into(displayImageView);
 
         }

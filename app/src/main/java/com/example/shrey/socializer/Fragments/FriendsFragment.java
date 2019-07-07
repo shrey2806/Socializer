@@ -61,7 +61,8 @@ public class FriendsFragment extends Fragment {
         mFriendlist.setLayoutManager(new LinearLayoutManager(getContext()));
 
         mUsersDatabase = FirebaseDatabase.getInstance().getReference().child("users");
-        mFriendDatabase = FirebaseDatabase.getInstance().getReference().child("Friends").child(userid);
+        mFriendDatabase = FirebaseDatabase.getInstance().getReference().child("Friend_requests").child(userid);
+
 
 
         return mMainView;
@@ -171,12 +172,12 @@ public class FriendsFragment extends Fragment {
 
 
         public  void setName(String name){
-            TextView usernameView=mview.findViewById(R.id.conv_user_name);
+            TextView usernameView=mview.findViewById(R.id.request_display_name);
             usernameView.setText(name);
         }
 
         public void setuserImage(String thumb_image){
-            CircleImageView userImageview=mview.findViewById(R.id.conv_user_image);
+            CircleImageView userImageview=mview.findViewById(R.id.request_display_image);
             Glide.with(mview.getContext()).load(thumb_image).placeholder(R.drawable.acc_image).into(userImageview);
         }
 
