@@ -68,7 +68,7 @@ public class RequestFragment extends Fragment {
 
        mRequestDatabase = FirebaseDatabase.getInstance().getReference().child("Friend_requests").child(currentUserId);
 
-       mRequestDatabase = FirebaseDatabase.getInstance().getReference().child("Friend_requests");
+       mReqDatabase2 = FirebaseDatabase.getInstance().getReference().child("Friend_requests");
 
        mFriendDatabase = FirebaseDatabase.getInstance().getReference().child("Friends");
 
@@ -82,15 +82,16 @@ public class RequestFragment extends Fragment {
 
         // TODO : First query on the database with the friend Requests.
         // TODO : Add these requests in the layout.
-        Query query = mRequestDatabase.orderByChild("request_type").equalTo("received");
+        Query query = mRequestDatabase.
+                orderByChild("request_type").equalTo("received");
 
         final FirebaseRecyclerAdapter<FriendRequest,FriendsReqViewHolder > firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<FriendRequest,
                 FriendsReqViewHolder>(FriendRequest.class,R.layout.friend_request_layout,
-                FriendsReqViewHolder.class,mRequestDatabase) {
+                FriendsReqViewHolder.class,query) {
             @Override
             protected void populateViewHolder(final FriendsReqViewHolder viewHolder, FriendRequest model, int position) {
 
-
+                Log.d("REQUEST ACTIVITY", "Inside viewHolder========>"+model);
                 final String request_user_id = getRef(position).getKey();
 
                 //get the name and display image of the user;

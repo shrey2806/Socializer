@@ -11,15 +11,16 @@
         android:id="@+id/message_text_left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="start|center_vertical"
         android:layout_alignParentTop="true"
         android:layout_gravity="start|center_vertical"
         android:layout_marginStart="0dp"
         android:background="@drawable/message_text_background"
+        android:gravity="start|center_vertical"
         android:padding="5dp"
         android:text="Hello How may I help"
-        android:visibility="invisible"
-        android:textColor="@color/common_google_signin_btn_text_dark_default" />
+        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textSize="18sp"
+        android:visibility="visible" />
 
 
     <TextView
@@ -32,10 +33,10 @@
 
         android:background="@drawable/right_text_message"
         android:gravity="end|center_vertical"
-        android:visibility="invisible"
         android:padding="5dp"
         android:text="Hello "
-         />
+        android:textSize="18sp"
+        android:visibility="visible" />
 
 </RelativeLayout>
 
