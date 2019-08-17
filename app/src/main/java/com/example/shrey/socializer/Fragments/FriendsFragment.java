@@ -1,6 +1,7 @@
 package com.example.shrey.socializer.Fragments;
 
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.shrey.socializer.ChatActivity;
 import com.example.shrey.socializer.Models.Friends;
 
@@ -93,7 +95,7 @@ public class FriendsFragment extends Fragment {
 
 
                         viewHolder.setName(userName);
-                        viewHolder.setuserImage(userThumb);
+                        viewHolder.setuserImage(userThumb,getActivity());
 
                         if(dataSnapshot.hasChild("online")) {
 
@@ -175,9 +177,10 @@ public class FriendsFragment extends Fragment {
             usernameView.setText(name);
         }
 
-        public void setuserImage(String thumb_image){
+        public void setuserImage(String thumb_image, Context ctx){
             CircleImageView userImageview=mview.findViewById(R.id.request_display_image);
-            Glide.with(mview.getContext()).load(thumb_image).placeholder(R.drawable.acc_image).into(userImageview);
+            Glide.with(ctx.getApplicationContext()).load(thumb_image).diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .placeholder(R.drawable.acc_image).into(userImageview);
         }
 
 

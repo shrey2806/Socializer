@@ -74,7 +74,7 @@ public class ProfileActivity extends AppCompatActivity {
                 DisplayName.setText(display_name);
                 DisplayStatus.setText(display_status);
 
-                Glide.with(ProfileActivity.this).load(image).placeholder(R.drawable.img).into(pImageView);
+                Glide.with(getApplicationContext()).load(image).placeholder(R.drawable.img).into(pImageView);
 
 
                 //_________________Update button on entry _______________//

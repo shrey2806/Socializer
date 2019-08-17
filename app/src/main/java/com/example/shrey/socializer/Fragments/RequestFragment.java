@@ -82,10 +82,12 @@ public class RequestFragment extends Fragment {
 
         // TODO : First query on the database with the friend Requests.
         // TODO : Add these requests in the layout.
+
+
         Query query = mRequestDatabase.
                 orderByChild("request_type").equalTo("received");
 
-        final FirebaseRecyclerAdapter<FriendRequest,FriendsReqViewHolder > firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<FriendRequest,
+        final FirebaseRecyclerAdapter<FriendRequest,FriendsReqViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<FriendRequest,
                 FriendsReqViewHolder>(FriendRequest.class,R.layout.friend_request_layout,
                 FriendsReqViewHolder.class,query) {
             @Override
@@ -93,6 +95,12 @@ public class RequestFragment extends Fragment {
 
                 Log.d("REQUEST ACTIVITY", "Inside viewHolder========>"+model);
                 final String request_user_id = getRef(position).getKey();
+
+                //TODO : FIX
+
+                if(model.getRequest_type().equals("sent")){
+                    viewHolder.mview.setVisibility(View.INVISIBLE);
+                }
 
                 //get the name and display image of the user;
                 mUserDatabase.child(request_user_id).addValueEventListener(new ValueEventListener() {
@@ -202,23 +210,24 @@ public class RequestFragment extends Fragment {
             mview = itemView;
         }
 
-        public Button getAcceptButton(){
+        Button getAcceptButton(){
             return mview.findViewById(R.id.accept_button);
 
         }
 
-        public Button getRejectButton(){
+        Button getRejectButton(){
 
             return mview.findViewById(R.id.reject_button);
 
         }
+
         public void setName(String name){
             TextView DisplayName= mview.findViewById(R.id.request_display_name);
             DisplayName.setText(name);
 
         }
 
-        public void setImage(String image){
+        void setImage(String image){
             ImageView imageView = mview.findViewById(R.id.request_display_image);
             Glide.with(mview.getContext()).load(image).placeholder(R.drawable.acc_image).into(imageView);
 

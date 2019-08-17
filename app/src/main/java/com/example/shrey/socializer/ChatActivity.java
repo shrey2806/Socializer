@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.shrey.socializer.Adapters.MessageAdapter;
 import com.example.shrey.socializer.Models.Messages;
 import com.google.firebase.auth.FirebaseAuth;
@@ -119,10 +120,21 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
+                String name = dataSnapshot.child("name").getValue().toString();
+
                 String online = dataSnapshot.child("online").getValue().toString();
+
+
                 String image = dataSnapshot.child("image").getValue().toString();
+
+                mDiplayTitle.setText(name);
+
+
                 try {
-                    Glide.with(getApplicationContext()).load(image).placeholder(R.drawable.acc_image).into(mDisplayImage);
+
+                    Glide.with(getApplicationContext()).load(image).placeholder(R.drawable.acc_image).
+                            diskCacheStrategy(DiskCacheStrategy.ALL).into(mDisplayImage);
+
                 } catch (Exception e) {
                     Log.d("Cannot load Image", "Can't");
                 }

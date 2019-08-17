@@ -1,5 +1,6 @@
 package com.example.shrey.socializer;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -60,7 +61,7 @@ public class UsersActivity extends AppCompatActivity {
 
                 viewHolder.setName(model.getName());
                 viewHolder.setUserStatus(model.getStatus());
-                viewHolder.setuserImage(model.getThumb_image());
+                viewHolder.setuserImage(model.getThumb_image(),getApplicationContext());
                 final String userId=getRef(position).getKey();
 
                 //Set On click listener for whole view
@@ -102,11 +103,15 @@ public class UsersActivity extends AppCompatActivity {
 
 
         }
-        public void setuserImage(String thumb_image){
+        public void setuserImage(String thumb_image, Context ctx){
             CircleImageView userImageview=mview.findViewById(R.id.request_display_image);
-            Glide.with(mview.getContext()).load(thumb_image).placeholder(R.drawable.acc_image).into(userImageview);
+            Glide.with(ctx).load(thumb_image).placeholder(R.drawable.acc_image).into(userImageview);
         }
 
     }
 
 }
+
+
+// TODO : Chnage Application context in glide to local context as close as possible
+// Follow :https://stackoverflow.com/questions/31964737/glide-iamage-loading-with-application-context/32887693#32887693
